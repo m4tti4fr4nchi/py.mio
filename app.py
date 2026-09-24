@@ -1,20 +1,31 @@
 import streamlit as st
 
-# 1. Inizializziamo la grandezza del bottone nella memoria dell'app
+# 1. Inizializziamo le memorie
 if "grandezza" not in st.session_state:
     st.session_state.grandezza = 20
+if "vittoria" not in st.session_state:
+    st.session_state.vittoria = False
 
-# 2. Iniettiamo del CSS per modificare SOLO il primo bottone
-# Usiamo data-testid="column":nth-of-type(1) per colpire solo la prima colonna
+# 2. Definiamo le azioni dei bottoni (Callback)
+def ingrandisci():
+    st.session_state.grandezza += 40
+    st.session_state.vittoria = False
+
+def vittoria():
+    st.session_state.vittoria = True
+    st.session_state.grandezza = 20 # Resetta la grandezza
+
+# 3. CSS Aggiornato (colpisce sia 'column' che 'stColumn' per compatibilità)
 st.markdown(f"""
     <style>
-    div[data-testid="column"]:nth-of-type(1) button {{
+    div[data-testid="column"]:nth-of-type(1) button,
+    div[data-testid="stColumn"]:nth-of-type(1) button {{
         height: auto !important;
         padding: {st.session_state.grandezza / 3}px !important;
-        width: 100% !important;
         transition: all 0.2s ease-in-out;
     }}
-    div[data-testid="column"]:nth-of-type(1) button p {{
+    div[data-testid="column"]:nth-of-type(1) button p,
+    div[data-testid="stColumn"]:nth-of-type(1) button p {{
         font-size: {st.session_state.grandezza}px !important;
     }}
     </style>
@@ -22,21 +33,19 @@ st.markdown(f"""
 
 st.title("Fai la tua scelta:")
 
-# 3. Creiamo due colonne per affiancare i bottoni
+# 4. Creiamo le colonne
 col1, col2 = st.columns(2)
 
 with col1:
-    # Il bottone "Vero" (Selezionabile)
-    if st.button("Opzione Giusta", key="vero"):
-        st.balloons()
-        st.success("Ottima scelta! Era inevitabile.")
-        st.session_state.grandezza = 20  # Resetta la grandezza per giocare di nuovo
-        st.rerun()
+    # Colleghiamo l'azione tramite 'on_click'
+    st.button("Opzione Giusta", on_click=vittoria, use_container_width=True)
 
 with col2:
-    # Il bottone "Finto" (Dispetti)
-    if st.button("Opzione Finta", key="finto"):
-        # Aumenta drasticamente la grandezza a ogni click
-        st.session_state.grandezza += 40
-        # Forza l'aggiornamento immediato della pagina per applicare il nuovo CSS
-        st.rerun()
+    # Colleghiamo l'azione tramite 'on_click'
+    st.button("Opzione Finta", on_click=ingrandisci, use_container_width=True)
+
+# 5. Effetto finale fuori dai bottoni
+if st.session_state.vittoria:
+    st.balloons()
+    st.success("Ottima scelta! Era inevitabile.")
+    st.session_state.vittoria = False # Si resetta per il prossimo giro
