@@ -49,4 +49,4 @@ with col2:
 if st.session_state.vittoria:
     st.balloons()
     st.success("Ottima scelta! Era inevitabile.")
-    st.session_state.vittoria = False
+    st.session_state.vittoria = False 
