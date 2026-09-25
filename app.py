@@ -87,12 +87,37 @@ st.title("Me la dai?")
 col1, col2 = st.columns(2)
 
 with col1:
-    st.button("Si", on_click=vittoria, use_container_width=True)
+    st.button("Si, certo amo il tuo pisellone", on_click=vittoria, use_container_width=True)
 
 with col2:
-    st.button("No", on_click=ingrandisci, use_container_width=True)
+    st.button("No, non mi piace...bleh che schifo", on_click=ingrandisci, use_container_width=True)
 
 if st.session_state.vittoria:
-    st.balloons()
-    st.success("Ottima scelta! Il pisellone è sempre ciò che ci vuole.")
+    # 1. Creiamo una pioggia personalizzata con HTML e animazioni CSS
+    gocce_html = """
+    <style>
+    .goccia {
+        position: fixed;
+        top: -10vh;
+        font-size: 2.5rem;
+        z-index: 9999;
+        animation: caduta linear forwards;
+    }
+    @keyframes caduta {
+        0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+        100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+    }
+    </style>
+    <div class="goccia" style="left: 10%; animation-duration: 3s; animation-delay: 0s;">💦</div>
+    <div class="goccia" style="left: 25%; animation-duration: 4.5s; animation-delay: 0.5s;">💦</div>
+    <div class="goccia" style="left: 45%; animation-duration: 2.8s; animation-delay: 0.2s;">💦</div>
+    <div class="goccia" style="left: 65%; animation-duration: 3.5s; animation-delay: 0.8s;">💦</div>
+    <div class="goccia" style="left: 80%; animation-duration: 3.2s; animation-delay: 0.4s;">💦</div>
+    <div class="goccia" style="left: 92%; animation-duration: 4s; animation-delay: 0.1s;">💦</div>
+    """
+    st.markdown(gocce_html, unsafe_allow_html=True)
+    
+    # 2. Messaggio finale coerente
+    st.markdown("<h2 style='text-align: center; color: #c9184a;'>Sapevo che avresti scelto bene 💦</h2>", unsafe_allow_html=True)
+    
     st.session_state.vittoria = False
