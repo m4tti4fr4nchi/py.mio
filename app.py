@@ -1,5 +1,7 @@
 import streamlit as st
 
+st.set_page_config(page_title="App-rimi", page_icon="🍑", layout="wide")
+
 # Inizializzazioni
 if "crescita" not in st.session_state:
     st.session_state.crescita = 0
