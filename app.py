@@ -1,6 +1,6 @@
 import streamlit as st
 
-st.set_page_config(page_title="App-rimi", page_icon="🍑", layout="wide")
+st.set_page_config(page_title="Ap(p)rimi", page_icon="🍑")
 
 # Inizializzazioni
 if "crescita" not in st.session_state:
@@ -89,7 +89,7 @@ st.title("Me la dai?")
 col1, col2 = st.columns(2)
 
 with col1:
-    st.button("Si, certo amo il tuo pisellone 🍆🤤", on_click=vittoria, use_container_width=True)
+    st.button("Si, certo! Amo il tuo pisellone 🍆🤤", on_click=vittoria, use_container_width=True)
 
 with col2:
     st.button("No, non mi piace...bleh che schifo 🤢🤮", on_click=ingrandisci, use_container_width=True)
